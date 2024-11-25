@@ -1,45 +1,34 @@
 // Jeu Pierre-Feuille-Ciseaux
 const jouer = () => {
-    // Choix possibles
-    const choixPossibles = ["pierre", "feuille", "ciseaux"];
+    const choix = ["pierre", "feuille", "ciseaux"]; // Les choix possibles
 
-    // Fonction pour obtenir le choix de l'utilisateur
-    const obtenirChoixUtilisateur = () => {
-        let choix = prompt("Choisissez pierre, feuille ou ciseaux :").toLowerCase();
-        while (!choixPossibles.includes(choix)) {
-            choix = prompt("Choix invalide. Choisissez pierre, feuille ou ciseaux :").toLowerCase();
-        }
-        return choix;
-    };
+    // Obtenir le choix de l'utilisateur
+    let utilisateur = prompt("Pierre, feuille ou ciseaux ?").toLowerCase();
+    while (!choix.includes(utilisateur)) {
+        console.log("Choix utilisateur invalide :", utilisateur);
+        utilisateur = prompt("Choix invalide. Essayez encore : pierre, feuille ou ciseaux ?").toLowerCase();
+    }
+    console.log("Choix utilisateur validé :", utilisateur);
 
-    // Fonction pour obtenir le choix de l'ordinateur
-    const obtenirChoixOrdinateur = () => {
-        const index = Math.floor(Math.random() * choixPossibles.length);
-        return choixPossibles[index];
-    };
+    // Choix de l'ordinateur
+    const ordinateur = choix[Math.floor(Math.random() * choix.length)];
+    console.log("Choix de l'ordinateur :", ordinateur);
 
     // Déterminer le gagnant
-    const determinerGagnant = (utilisateur, ordinateur) => {
-        if (utilisateur === ordinateur) {
-            return "Égalité !";
-        }
-        if (
-            (utilisateur === "pierre" && ordinateur === "ciseaux") ||
-            (utilisateur === "feuille" && ordinateur === "pierre") ||
-            (utilisateur === "ciseaux" && ordinateur === "feuille")
-        ) {
-            return "Vous avez gagné ! 🎉";
-        } else {
-            return "L'ordinateur a gagné ! 🤖";
-        }
-    };
-
-    // Déroulement du jeu
-    const choixUtilisateur = obtenirChoixUtilisateur();
-    const choixOrdinateur = obtenirChoixOrdinateur();
-    console.log(`Vous avez choisi : ${choixUtilisateur}`);
-    console.log(`L'ordinateur a choisi : ${choixOrdinateur}`);
-    alert(determinerGagnant(choixUtilisateur, choixOrdinateur));
+    if (utilisateur === ordinateur) {
+        console.log("Résultat : Égalité !");
+        alert(`Égalité ! Vous avez tous les deux choisi ${utilisateur}.`);
+    } else if (
+        (utilisateur === "pierre" && ordinateur === "ciseaux") ||
+        (utilisateur === "feuille" && ordinateur === "pierre") ||
+        (utilisateur === "ciseaux" && ordinateur === "feuille")
+    ) {
+        console.log("Résultat : Vous avez gagné !");
+        alert(`Bravo, vous avez gagné ! 🎉 (${utilisateur} bat ${ordinateur})`);
+    } else {
+        console.log("Résultat : L'ordinateur a gagné !");
+        alert(`Dommage, l'ordinateur a gagné ! 🤖 (${ordinateur} bat ${utilisateur})`);
+    }
 };
 
 // Lancer le jeu
