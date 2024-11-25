@@ -1,4 +1,3 @@
-
 //role : donner la possibilité au joueur de chosir entre feuille, ciseaux et pierre 
 //paramétre : non
 // retour : le choix du joueur 
