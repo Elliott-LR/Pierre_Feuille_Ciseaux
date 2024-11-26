@@ -76,3 +76,5 @@ function jouer(){
     let result=compare(choixJ,choixO);
     affiche(choixJ,choixO,result);
 }
+let maBoiteResultat=document.getElementById('.resultat')
+maBoiteResultat.innerHTML("<p>vous avez gagné</p>")
