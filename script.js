@@ -1,80 +1,47 @@
-//role : donner la possibilité au joueur de chosir entre feuille, ciseaux et pierre 
-//paramétre : non
-// retour : le choix du joueur 
+// Liste des choix possibles
+const choix = ["pierre", "feuille", "ciseaux"];
 
-function choixJoueur(){
-    let choixJ=prompt("Choisissez feuille, ciseaux ou pierre");
-    return choixJ; 
+// Sélection des éléments HTML
+const boutons = document.querySelectorAll(".choix-btn");
+const resultatDiv = document.querySelector(".result");
+const choixUtilisateurDiv = document.querySelector(".choix-utilisateur");
+const choixOrdinateurDiv = document.querySelector(".choix-ordinateur");
+
+// Fonction pour générer un choix aléatoire pour l'ordinateur
+function choixOrdinateur() {
+    return choix[Math.floor(Math.random() * choix.length)];
 }
 
-//role : L'ordinateur choisis de maniére aléatoire un chiffre entre 1 et 3 
-//paramétre : non
-//retour : le choix de l'ordinateur sous forme de chaine de caractére 
-function choixOrdi() {
-   return Math.ceil(Math.random()*3);
-}
-
-
-//role : convertir les chiffres en mot 
-//paramétre : le nbr choisi par l'ordi 
-//retourne : le mot 
-// 1=papier, 2=ciseaux, 3=pierre
-function conversion(nbr){
-
-    let choixO;
-    if (nbr === 1){
-    choixO="papier"
+// Fonction pour déterminer le gagnant
+function determinerGagnant(utilisateur, ordinateur) {
+    if (utilisateur === ordinateur) {
+        return "Égalité ! 😐";
+    } 
+    if (
+        (utilisateur === "pierre" && ordinateur === "ciseaux") ||
+        (utilisateur === "feuille" && ordinateur === "pierre") ||
+        (utilisateur === "ciseaux" && ordinateur === "feuille")
+    ) {
+        return "Vous avez gagné ! 🎉";
     }
-    else if (nbr===2){
-        choixO="ciseaux"
-    }else if (nbr===3){
-        choixO="pierre"
-    }
-return choixO;
+    return "L'ordinateur a gagné ! 🤖";
 }
 
+// Fonction qui gère le jeu quand un bouton est cliqué
+function jouer(event) {
+    const choixUtilisateur = event.target.dataset.choix; // Récupère le choix du bouton cliqué
+    const choixOrdi = choixOrdinateur(); // Génère un choix pour l'ordi
 
-//role: Comparer le choix du joueur et le choix de l'ordi 
-// parametre : choix du joueur et choix de l'ordinateur 
-// retour : le gagnant 
+    // Afficher les choix
+    choixUtilisateurDiv.textContent = `Vous : ${choixUtilisateur}`;
+    choixOrdinateurDiv.textContent = `Ordi : ${choixOrdi}`;
 
-function compare(choixJoueur, choixOrdinateur){
-
-    let result;
-
-    if (choixJoueur === choixOrdinateur){
-        result="égalité"
-    }
-    else if (
-        (choixJoueur==="ciseaux"&&choixOrdinateur==="papier")||
-        (choixJoueur==="papier"&&choixOrdinateur==="pierre")||
-        (choixJoueur==="pierre"&&choixOrdinateur==="ciseaux")
-    ){
-        result="Vous avez gagné"
-    }
-    else {
-        result="l'ordinateur gagne ! looser "
-    }
-    return result;
+    // Déterminer le gagnant et afficher le résultat
+    const resultat = determinerGagnant(choixUtilisateur, choixOrdi);
+    resultatDiv.textContent = resultat;
 }
 
-//role: Afficher les choix et le gagnants dans un alert
-//paramétre : choix du joueur, choix de l'ordinateur, resultat
-//retourne : 
-
-function affiche(choixJ, choixO, resultat){
-    alert(`choix du joueur:${choixJ} // chois de l'ordinateur: ${choixO} // ${resultat} `)
-}
-
-//role: lancer le jeu en lancant les fonctions dans le bon ordre 
-// paramétre: non
-//retour: non
-function jouer(){
-    let choixJ=choixJoueur();
-    let nombre=choixOrdi();
-    let choixO=conversion(nombre);
-    let result=compare(choixJ,choixO);
-    affiche(choixJ,choixO,result);
-}
-let maBoiteResultat=document.getElementById('.resultat')
-maBoiteResultat.innerHTML("<p>vous avez gagné</p>")
+// Ajout des écouteurs d'événements sur les boutons
+boutons.forEach(bouton => {
+    bouton.addEventListener("click", jouer);
+});

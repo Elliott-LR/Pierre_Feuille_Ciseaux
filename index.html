@@ -1,14 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="script.js"></script>
+    <title>Pierre-Feuille-Ciseaux</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id=" resultat">
-        
+
+    <div class="container">
+        <h1>Pierre-Feuille-Ciseaux</h1>
+        <p>Choisissez :</p>
+
+        <div class="button-group">
+            <button class="choix-btn" data-choix="pierre">🪨 Pierre</button>
+            <button class="choix-btn" data-choix="feuille">📄 Feuille</button>
+            <button class="choix-btn" data-choix="ciseaux">✂️ Ciseaux</button>
+        </div>
+
+        <p class="choix-utilisateur">Vous : ?</p>
+        <p class="choix-ordinateur">Ordi : ?</p>
+        <p class="result">Résultat : ?</p>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
